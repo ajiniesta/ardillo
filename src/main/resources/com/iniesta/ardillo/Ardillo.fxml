@@ -51,7 +51,11 @@
     </MenuBar>
     <ToolBar>
       <items>
-        <Button mnemonicParsing="false" text="Button" />
+        <Button fx:id="buttonAddConnection" mnemonicParsing="false" onAction="#handleAddConnection" text="">
+          <tooltip>
+            <Tooltip text="Add Database" />
+          </tooltip>
+        </Button>
         <Button mnemonicParsing="false" text="Button" />
         <Button mnemonicParsing="false" text="Button" />
       </items>
@@ -60,39 +64,31 @@
       <items>
         <StackPane prefHeight="150.0" prefWidth="200.0">
           <children>
-            <Accordion>
-              <expandedPane>
-                <TitledPane fx:id="x1" animated="false" text="Connections">
+            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Connections">
                   <content>
                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
-                        <TreeView prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <TreeView fx:id="treeViewConnections" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                       </children>
                     </AnchorPane>
                   </content>
-                </TitledPane>
-              </expandedPane>
-              <panes>
-                <fx:reference source="x1" />
-                <TitledPane animated="false" text="untitled">
-                  <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                  </content>
-                </TitledPane>
-              </panes>
-            </Accordion>
+                </Tab>
+              </tabs>
+            </TabPane>
           </children>
         </StackPane>
         <StackPane prefHeight="150.0" prefWidth="200.0">
           <children>
-            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" />
+            <TabPane fx:id="mainTabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" />
           </children>
         </StackPane>
       </items>
     </SplitPane>
     <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
       <children>
-        <Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="Left status" HBox.hgrow="ALWAYS">
+        <Label fx:id="messageLeftStatus" maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="Left status" HBox.hgrow="ALWAYS">
           <font>
             <Font size="11.0" fx:id="x3" />
           </font>
@@ -100,8 +96,12 @@
             <Color blue="0.625" green="0.625" red="0.625" fx:id="x4" />
           </textFill>
         </Label>
-        <Pane prefHeight="-1.0" prefWidth="-1.0" style="" HBox.hgrow="ALWAYS" />
-        <Label font="$x3" maxWidth="-1.0" text="Right status" textFill="$x4" HBox.hgrow="NEVER" />
+        <Pane prefHeight="-1.0" prefWidth="-1.0" style="" HBox.hgrow="ALWAYS">
+          <children>
+            <ProgressBar fx:id="progressBar" layoutX="279.0" layoutY="1.0" prefWidth="200.0" progress="-1.0" />
+          </children>
+        </Pane>
+        <Label fx:id="messageRightStatus" font="$x3" maxWidth="-1.0" text="Right status" textFill="$x4" HBox.hgrow="NEVER" />
       </children>
       <padding>
         <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />

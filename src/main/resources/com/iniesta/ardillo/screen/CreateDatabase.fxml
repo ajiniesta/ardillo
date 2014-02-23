@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="348.0" prefWidth="417.0" xmlns:fx="http://javafx.com/fxml" fx:controller="com.iniesta.ardillo.screen.CreateDatabase">
+  <children>
+    <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <children>
+        <TextField fx:id="textFieldConnectionName" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <ComboBox fx:id="comboBoxDatabaseType" GridPane.columnIndex="1" GridPane.rowIndex="2">
+          <items>
+            <FXCollections fx:factory="observableArrayList">
+              <String fx:value="Item 1" />
+              <String fx:value="Item 2" />
+              <String fx:value="Item 3" />
+            </FXCollections>
+          </items>
+        </ComboBox>
+        <TextField fx:id="textFieldHost" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <TextField fx:id="textFieldPort" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+        <TextField fx:id="textFieldUsername" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+        <PasswordField fx:id="passwordField" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+        <TextField fx:id="textFieldPrefixDB" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+        <TextField fx:id="textFieldDriver" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+        <Label text="Connection Name" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+          <GridPane.margin>
+            <Insets right="10.0" fx:id="x1" />
+          </GridPane.margin>
+        </Label>
+        <Label text="Database Type" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.margin="$x1" GridPane.rowIndex="2" />
+        <Label text="Host" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.margin="$x1" GridPane.rowIndex="3" />
+        <Label text="Port" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.margin="$x1" GridPane.rowIndex="4" />
+        <Label text="Username" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.margin="$x1" GridPane.rowIndex="5" />
+        <Label text="Password" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.margin="$x1" GridPane.rowIndex="6" />
+        <Label text="Prefix DB" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.margin="$x1" GridPane.rowIndex="7" />
+        <Label text="Driver" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.margin="$x1" GridPane.rowIndex="8" />
+        <HBox alignment="CENTER" prefHeight="-1.0" prefWidth="-1.0" spacing="10.0" GridPane.columnIndex="0" GridPane.columnSpan="2147483647" GridPane.rowIndex="9">
+          <children>
+            <Button mnemonicParsing="false" onAction="#handleTestAction" prefWidth="70.0" text="Test" />
+            <Button mnemonicParsing="false" onAction="#handleSaveAction" prefWidth="70.0" text="Save" />
+            <Button mnemonicParsing="false" onAction="#handleCancelAction" prefWidth="70.0" text="Cancel" />
+          </children>
+        </HBox>
+      </children>
+      <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      </columnConstraints>
+      <padding>
+        <Insets left="20.0" right="20.0" />
+      </padding>
+      <rowConstraints>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      </rowConstraints>
+    </GridPane>
+  </children>
+</AnchorPane>

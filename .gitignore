@@ -7,4 +7,9 @@
 *.bak
 *.sublime-*
 
+.classpath
+.project
+.settings
+data
+
 target
