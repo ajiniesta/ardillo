@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<StackPane id="StackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="com.iniesta.ardillo.screen.Query">
+  <children>
+    <SplitPane dividerPositions="0.5050251256281407" focusTraversable="true" orientation="VERTICAL" prefHeight="-1.0" prefWidth="-1.0">
+      <items>
+        <AnchorPane prefHeight="-1.0" prefWidth="-1.0">
+          <children>
+            <VBox prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <children>
+                <ToolBar orientation="HORIZONTAL" prefWidth="598.0">
+                  <items>
+                    <Button mnemonicParsing="false" text="">
+                      <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="24.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                            <Image url="@../../../../images/execute.png" />
+                          </image>
+                        </ImageView>
+                      </graphic>
+                    </Button>
+                  </items>
+                </ToolBar>
+                <TextArea fx:id="textQuery" prefHeight="168.0" prefWidth="598.0" promptText="Input the Query, please!" wrapText="true" />
+              </children>
+            </VBox>
+          </children>
+        </AnchorPane>
+        <StackPane prefHeight="150.0" prefWidth="200.0">
+          <children>
+            <TabPane fx:id="tabPaneOutput" prefHeight="-1.0" prefWidth="-1.0" side="BOTTOM" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab fx:id="tabOutput" text="Output">
+                  <content>
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                      <children>
+                        <TextArea fx:id="textOutput" prefWidth="-1.0" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                      </children>
+                    </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab fx:id="tabOutputGrid" text="Output grid">
+                  <content>
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+          </children>
+        </StackPane>
+      </items>
+    </SplitPane>
+  </children>
+</StackPane>

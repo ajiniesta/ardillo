@@ -9,10 +9,16 @@ import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
-import javafx.fxml.*;
-import javafx.scene.Parent;
-import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TreeCell;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 
@@ -48,6 +54,9 @@ public class Ardillo {
     
     @FXML
     private TabPane mainTabPane;
+    
+    @FXML
+    private TabPane tabPaneConnections;
 
     @FXML
     void initialize() {
@@ -55,11 +64,7 @@ public class Ardillo {
     	fxInitialize();
     }
     
-    private void fxInitialize() {
-		ImageView imageView = new ImageView("/images/add_ddbb.png");
-		imageView.setFitHeight(30);
-		imageView.setFitWidth(30);
-		buttonAddConnection.setGraphic(imageView);
+    private void fxInitialize() {		
 		treeViewConnections.setCellFactory(new Callback<TreeView<ConnectionNode>, TreeCell<ConnectionNode>>() {			
 			public TreeCell<ConnectionNode> call(TreeView<ConnectionNode> arg0) {
 				return new ConnectionTreeCell();
@@ -146,5 +151,12 @@ public class Ardillo {
 				}
 			});
 		}
+	}
+	
+	@FXML
+	void handleConnectionAction(ActionEvent action){
+		Tab tab = new Tab();
+		
+		tabPaneConnections.getTabs().add(tab);
 	}
 }

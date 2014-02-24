@@ -4,6 +4,7 @@
 <?import java.util.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
@@ -52,19 +53,45 @@
     <ToolBar>
       <items>
         <Button fx:id="buttonAddConnection" mnemonicParsing="false" onAction="#handleAddConnection" text="">
+          <graphic>
+            <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+              <image>
+                <Image url="@../../../images/add_ddbb.png" />
+              </image>
+            </ImageView>
+          </graphic>
           <tooltip>
             <Tooltip text="Add Database" />
           </tooltip>
         </Button>
-        <Button mnemonicParsing="false" text="Button" />
-        <Button mnemonicParsing="false" text="Button" />
+        <Button mnemonicParsing="false" onAction="#handleConnectionAction" text="">
+          <graphic>
+            <ImageView fitHeight="24.0" fitWidth="24.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+              <image>
+                <Image url="@../../../images/connect_ddbb.png" />
+              </image>
+            </ImageView>
+          </graphic>
+          <tooltip>
+            <Tooltip text="Connect to Database" />
+          </tooltip>
+        </Button>
+        <Button mnemonicParsing="false" text="">
+          <graphic>
+            <ImageView fitHeight="24.0" fitWidth="24.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+              <image>
+                <Image url="@../../../images/duplicate_ddbb.png" />
+              </image>
+            </ImageView>
+          </graphic>
+        </Button>
       </items>
     </ToolBar>
     <SplitPane dividerPositions="0.2984409799554566" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <items>
         <StackPane prefHeight="150.0" prefWidth="200.0">
           <children>
-            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="tabPaneConnections" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab text="Connections">
                   <content>
@@ -81,7 +108,7 @@
         </StackPane>
         <StackPane prefHeight="150.0" prefWidth="200.0">
           <children>
-            <TabPane fx:id="mainTabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" />
+            <TabPane fx:id="mainTabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="SELECTED_TAB" />
           </children>
         </StackPane>
       </items>
