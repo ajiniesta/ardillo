@@ -9,9 +9,7 @@ import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.util.Callback;
@@ -19,7 +17,7 @@ import javafx.util.Callback;
 import com.iniesta.ardillo.dao.DAOConnection;
 import com.iniesta.ardillo.domain.ArdilloConnection;
 import com.iniesta.ardillo.util.ConnectionNode;
-import com.iniesta.ardillo.util.ConnectionWithDataNode;
+import com.iniesta.ardillo.util.ExternalBinding;
 
 
 public class CreateDatabase {
@@ -58,10 +56,7 @@ public class CreateDatabase {
 
 	private Callback<ConnectionNode, Void> callBackSuccess;
 
-	private Node[] nodesToBind;
-
-	private Label[] labels;
-
+	private ExternalBinding externalBinding;
 
     @FXML
     void handleCancelAction(ActionEvent event) {
@@ -98,15 +93,14 @@ public class CreateDatabase {
 				};
 			}
 		};
-		bind(serviceSave);
-		bindMessages(serviceSave);
+		externalBinding.bindAll(serviceSave);
 		serviceSave.runningProperty().addListener(new ChangeListener<Boolean>() {
 			public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean newValue) {
 				if(!newValue){
 					ArdilloConnection value = serviceSave.getValue();
 					if(value!=null){
-						ConnectionWithDataNode connNode = new ConnectionWithDataNode(value);
-				    	callBackSuccess.call(connNode);				
+						ConnectionNode connNode = new ConnectionNode(value);
+				    	callBackSuccess.call(connNode);
 					}
 				}
 			}
@@ -132,28 +126,8 @@ public class CreateDatabase {
 		this.callBackSuccess = callback;		
 	}
 
-	public void setThingsToBind(Node ... nodesToBind) {
-		this.nodesToBind = nodesToBind;		
-	}
-	
-	public void setThingsToBindMessage(Label ... labels) {
-		this.labels = labels;	
-	}
-	
-	public void bind(Service<?> service){
-		if(nodesToBind!=null){
-			for (int i = 0; i < nodesToBind.length; i++) {
-				nodesToBind[i].visibleProperty().bind(service.runningProperty());
-			}
-		}
-	}
-	
-	private void bindMessages(Service<ArdilloConnection> service) {
-		if(labels!=null){
-			for (int i = 0; i < labels.length; i++) {
-				labels[i].textProperty().bind(service.messageProperty());
-			}
-		}
+	public void setExternalBinding(ExternalBinding externalBinding) {
+		this.externalBinding = externalBinding;		
 	}
 
 }

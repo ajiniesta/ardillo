@@ -25,11 +25,14 @@ import javafx.util.Callback;
 import com.iniesta.ardillo.dao.DAOConnection;
 import com.iniesta.ardillo.domain.ArdilloConnection;
 import com.iniesta.ardillo.screen.CreateDatabase;
+import com.iniesta.ardillo.screen.DatabaseDetail;
+import com.iniesta.ardillo.util.CommonUtil;
 import com.iniesta.ardillo.util.ConnectionNode;
 import com.iniesta.ardillo.util.ConnectionTreeCell;
-import com.iniesta.ardillo.util.ConnectionWithDataNode;
+import com.iniesta.ardillo.util.DataNode;
+import com.iniesta.ardillo.util.ExternalBinding;
 
-public class Ardillo {
+public class Ardillo extends ExternalBinding {
 
     @FXML
     private ResourceBundle resources;
@@ -38,7 +41,7 @@ public class Ardillo {
     private URL location;
 
     @FXML
-    private TreeView<ConnectionNode> treeViewConnections;
+    private TreeView<DataNode> treeViewConnections;
     
     @FXML
     private ProgressBar progressBar;
@@ -65,8 +68,8 @@ public class Ardillo {
     }
     
     private void fxInitialize() {		
-		treeViewConnections.setCellFactory(new Callback<TreeView<ConnectionNode>, TreeCell<ConnectionNode>>() {			
-			public TreeCell<ConnectionNode> call(TreeView<ConnectionNode> arg0) {
+		treeViewConnections.setCellFactory(new Callback<TreeView<DataNode>, TreeCell<DataNode>>() {			
+			public TreeCell<DataNode> call(TreeView<DataNode> arg0) {
 				return new ConnectionTreeCell();
 			}
 		});
@@ -80,17 +83,13 @@ public class Ardillo {
 		try {
 			AnchorPane parent = (AnchorPane) loader.load();
 			AnchorPane content = new AnchorPane();
-			AnchorPane.setBottomAnchor(parent, 0.0);
-			AnchorPane.setTopAnchor(parent, 0.0);
-			AnchorPane.setLeftAnchor(parent, 0.0);
-			AnchorPane.setRightAnchor(parent, 0.0);
+			CommonUtil.setAnchor0(parent);
 			content.getChildren().add(parent);
 			tab.setContent(content);
 			
 			CreateDatabase createDatabase = (CreateDatabase)loader.getController();
 			tab.setClosable(true);
-			createDatabase.setThingsToBind(progressBar);
-			createDatabase.setThingsToBindMessage(messageLeftStatus);
+			createDatabase.setExternalBinding((ExternalBinding)this);			
 			createDatabase.setOnCloseAction(new Callback<Void, Void>() {
 				public Void call(Void arg0) {
 					mainTabPane.getTabs().remove(tab);
@@ -99,7 +98,7 @@ public class Ardillo {
 			});
 			createDatabase.setOnSuccessful(new Callback<ConnectionNode, Void>() {
 				public Void call(ConnectionNode connNode) {
-					treeViewConnections.getRoot().getChildren().add(new TreeItem<ConnectionNode>(connNode));
+					treeViewConnections.getRoot().getChildren().add(new TreeItem<DataNode>(connNode));
 					return null;
 				}
 			});
@@ -128,20 +127,20 @@ public class Ardillo {
 
 	private void fillTree(){
     	try{
-    	TreeItem<ConnectionNode> root = new TreeItem<ConnectionNode>(new ConnectionNode("Connections"));
+    	TreeItem<DataNode> root = new TreeItem<DataNode>(new DataNode("Connections"));
     	root.setExpanded(true);
     	DAOConnection dao = new DAOConnection();
     	List<ArdilloConnection> list = dao.listConnections();
     	if(list!=null){
     		for (ArdilloConnection ardilloConnection : list) {
-				root.getChildren().add(new TreeItem<ConnectionNode>(new ConnectionWithDataNode(ardilloConnection)));
+				root.getChildren().add(new TreeItem<DataNode>(new ConnectionNode(ardilloConnection)));
 			}
     	}
     	setTreeRoot(root);
     	}catch(Exception e){}
     }
 
-	private void setTreeRoot(final TreeItem<ConnectionNode> root) {
+	private void setTreeRoot(final TreeItem<DataNode> root) {
 		if(Platform.isFxApplicationThread()){
 			treeViewConnections.setRoot(root);
 		}else{
@@ -155,8 +154,22 @@ public class Ardillo {
 	
 	@FXML
 	void handleConnectionAction(ActionEvent action){
-		Tab tab = new Tab();
+		TreeItem<DataNode> selectedItem = treeViewConnections.getSelectionModel().getSelectedItem();
+		if(selectedItem!=null && selectedItem.getValue() instanceof ConnectionNode){
+			Tab tab = new DatabaseDetail((ConnectionNode)selectedItem.getValue(), (ExternalBinding)this);		
+			tabPaneConnections.getTabs().add(tab);
+		}
+	}
+
+	@Override
+	public void bind(Service<?> service) {
+		// TODO Auto-generated method stub
 		
-		tabPaneConnections.getTabs().add(tab);
+	}
+
+	@Override
+	public void bindMessages(Service<?> service) {
+		// TODO Auto-generated method stub
+		
 	}
 }

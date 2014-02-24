@@ -5,6 +5,7 @@ import org.hibernate.cfg.AnnotationConfiguration;
 
 import com.iniesta.ardillo.domain.ArdilloConnection;
 
+@SuppressWarnings("deprecation")
 public class HibernateUtil {
 
 	private static final SessionFactory sessionFactory;

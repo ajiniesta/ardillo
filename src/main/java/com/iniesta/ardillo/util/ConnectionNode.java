@@ -1,17 +1,25 @@
 package com.iniesta.ardillo.util;
 
-public class ConnectionNode {
+import com.iniesta.ardillo.domain.ArdilloConnection;
 
-	private String nodeName;
+public class ConnectionNode extends DataNode{
+private ArdilloConnection ardillConnection;
 	
-	public ConnectionNode() {
-	}
-	
-	public ConnectionNode(String nodeName) {
-		this.nodeName = nodeName;
+	public ConnectionNode(ArdilloConnection ardilloConnection){
+		super();
+		ardillConnection = ardilloConnection;
 	}
 
-	public String getNodeName(){
+	/* (non-Javadoc)
+	 * @see com.iniesta.ardillo.util.ConnectionNode#getNodeName()
+	 */
+	@Override
+	public String getNodeName() {
+		String nodeName = null;
+		if(ardillConnection!=null){
+			nodeName = ardillConnection.getName();
+		}
 		return nodeName;
-	}
+	}	
+
 }
