@@ -67,7 +67,7 @@ public class Ardillo extends ExternalBinding {
     	fxInitialize();
     }
     
-    private void fxInitialize() {		
+    private void fxInitialize() {
 		treeViewConnections.setCellFactory(new Callback<TreeView<DataNode>, TreeCell<DataNode>>() {			
 			public TreeCell<DataNode> call(TreeView<DataNode> arg0) {
 				return new ConnectionTreeCell();

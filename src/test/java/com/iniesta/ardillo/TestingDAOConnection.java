@@ -20,6 +20,23 @@ public class TestingDAOConnection extends TestCase{
 
 		assertNotNull(id);
 	}
+	
+	public void testAdd(){
+		DAOConnection dao = new DAOConnection();
+		ArdilloConnection aconn = new ArdilloConnection();
+		aconn.setDbms("h2:file");
+		aconn.setHost("data/ardillo");
+		aconn.setPort(null);
+		aconn.setDriver("org.h2.Driver");
+		aconn.setUser("SA");
+		aconn.setPassword("");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_hhmm");
+		String date = sdf.format(new Date());
+		aconn.setName("del"+date);
+		
+		Integer id = dao.saveConnection(aconn);
+		assertNotNull(id);
+	}
 
 	public void testListing(){
 		DAOConnection dao = new DAOConnection();
