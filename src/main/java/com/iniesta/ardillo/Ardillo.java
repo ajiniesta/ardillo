@@ -163,13 +163,11 @@ public class Ardillo extends ExternalBinding {
 
 	@Override
 	public void bind(Service<?> service) {
-		// TODO Auto-generated method stub
-		
+		progressBar.visibleProperty().bind(service.runningProperty());
 	}
 
 	@Override
 	public void bindMessages(Service<?> service) {
-		// TODO Auto-generated method stub
-		
+		messageLeftStatus.textProperty().bind(service.messageProperty());		
 	}
 }

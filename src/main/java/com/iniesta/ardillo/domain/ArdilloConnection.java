@@ -126,7 +126,7 @@ public class ArdilloConnection implements Serializable {
 		}
 	}
 
-	public Connection getConnection() throws SQLException, ClassNotFoundException {
+	public Connection createConnection() throws SQLException, ClassNotFoundException {
 		Connection conn = null;
 		Properties connectionProps = new Properties();
 		connectionProps.put("user", this.user);
