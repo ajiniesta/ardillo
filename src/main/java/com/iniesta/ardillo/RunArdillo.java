@@ -1,5 +1,7 @@
 package com.iniesta.ardillo;
 
+import com.iniesta.ardillo.util.HibernateUtil;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,6 +21,16 @@ public class RunArdillo extends Application{
 		Scene scene = new Scene(parent, 900, 600);
 		stage.setScene(scene);
 		// Show the stage
-		stage.show();
+		stage.show();		
 	}
+
+	/* (non-Javadoc)
+	 * @see javafx.application.Application#stop()
+	 */
+	@Override
+	public void stop() throws Exception {
+		super.stop();
+		HibernateUtil.getSessionFactory().close();
+	}	
+	
 }

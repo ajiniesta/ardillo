@@ -22,7 +22,7 @@ public class ArdilloConnection implements Serializable {
 	private Integer port;
 	private String user;
 	private String password;
-	private String prefixdb;
+	private String schema;
 	private String driver;
 
 	@Id
@@ -82,12 +82,12 @@ public class ArdilloConnection implements Serializable {
 	}
 
 	@Column
-	public String getPrefixDB() {
-		return prefixdb;
+	public String getSchema() {
+		return schema;
 	}
 
-	public void setPrefixDB(String prefixdb) {
-		this.prefixdb = prefixdb;
+	public void setSchema(String schema) {
+		this.schema = schema;
 	}
 
 	@Column
@@ -110,7 +110,7 @@ public class ArdilloConnection implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ArdilloConnection [id=" + id + ", name=" + name + ", dbms=" + dbms + ", host=" + host + ", port=" + port + ", user=" + user + ", password=" + password + ", prefixdb=" + prefixdb + ", driver=" + driver + "]";
+		return "ArdilloConnection [id=" + id + ", name=" + name + ", dbms=" + dbms + ", host=" + host + ", port=" + port + ", user=" + user + ", password=" + password + ", prefixdb=" + schema + ", driver=" + driver + "]";
 	}
 
 	public void update(ArdilloConnection conn) {
@@ -120,7 +120,7 @@ public class ArdilloConnection implements Serializable {
 			port = conn.port;
 			user = conn.user;
 			password = conn.password;
-			prefixdb = conn.prefixdb;
+			schema = conn.schema;
 			driver = conn.driver;
 			dbms = conn.dbms;
 		}

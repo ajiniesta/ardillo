@@ -21,7 +21,7 @@ public class TestingDatabaseDetails extends TestCase{
 		aconn.setDriver("org.h2.Driver");
 		aconn.setUser("SA");
 		aconn.setPassword("");
-		aconn.setPrefixDB("PUBLIC");
+		aconn.setSchema("PUBLIC");
 		
 		Connection connection = aconn.createConnection();
 		assertNotNull(connection);

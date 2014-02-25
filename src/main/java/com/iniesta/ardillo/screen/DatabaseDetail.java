@@ -33,8 +33,9 @@ public class DatabaseDetail extends Tab {
 		super(connectionData.getNodeName());
 		AnchorPane content = new AnchorPane();
 		parent = new AnchorPane();
-		CommonUtil.setAnchor0(parent);
+		CommonUtil.setAnchor0(parent);		
 		treeView = new TreeView<DataNode>();
+		CommonUtil.setAnchor0(treeView);
 		treeView.setCellFactory(new Callback<TreeView<DataNode>, TreeCell<DataNode>>() {
 			public TreeCell<DataNode> call(TreeView<DataNode> arg0) {
 				return new DatabaseTreeCell();
@@ -43,6 +44,7 @@ public class DatabaseDetail extends Tab {
 		Service<TreeItem<DataNode>> service = generateService(connectionData);
 		externalBinding.bindAll(service);
 		treeView.rootProperty().bind(service.valueProperty());
+		parent.getChildren().add(treeView);
 		service.start();
 		content.getChildren().add(parent);
 		setContent(content);
@@ -76,7 +78,7 @@ public class DatabaseDetail extends Tab {
 			try {
 				connection = ardilloConnection.createConnection();
 				DatabaseMetaData metaData = connection.getMetaData();
-				ResultSet resultSet = metaData.getTables(null, ardilloConnection.getPrefixDB(), "%", null);
+				ResultSet resultSet = metaData.getTables(null, ardilloConnection.getSchema(), "%", null);
 				if(resultSet!=null){
 					while (resultSet.next()) {
 						String tableName = resultSet.getString(3);

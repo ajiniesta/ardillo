@@ -47,7 +47,7 @@ public class CreateDatabase {
     private TextField textFieldPort;
 
     @FXML
-    private TextField textFieldPrefixDB;
+    private TextField textFieldSchema;
 
     @FXML
     private TextField textFieldUsername;
@@ -80,7 +80,7 @@ public class CreateDatabase {
 							value.setUser(textFieldUsername.getText());
 							value.setPassword(passwordField.getText());
 							value.setDriver(textFieldDriver.getText());
-							value.setPrefixDB(textFieldPrefixDB.getText());
+							value.setSchema(textFieldSchema.getText());
 							Integer id = new DAOConnection().saveConnection(value);
 							if(id==null){
 								updateMessage("Problem saving");
