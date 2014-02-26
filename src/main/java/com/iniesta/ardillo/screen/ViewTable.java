@@ -2,8 +2,6 @@ package com.iniesta.ardillo.screen;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -23,7 +21,6 @@ import com.iniesta.ardillo.util.DatabaseDataNode;
 import com.iniesta.ardillo.util.ExternalBinding;
 import com.iniesta.ardillo.util.dddbb.MetaDataCalculations;
 import com.iniesta.ardillo.util.table.CommonRow;
-import com.iniesta.ardillo.util.table.Field;
 import com.iniesta.ardillo.util.table.StringField;
 
 public class ViewTable {
@@ -110,7 +107,7 @@ public class ViewTable {
 		for (int i = 0; i < colNames.length; i++) {
 			TableColumn<CommonRow, String> col = new TableColumn<CommonRow, String>(colNames[i]);
 			col.setCellValueFactory(StringField.getCellValueFactory(i));
-			col.setPrefWidth(100);
+			col.setPrefWidth(150);
 			cols.add(col);
 		}		
 		return cols;

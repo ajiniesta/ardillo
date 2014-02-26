@@ -1,10 +1,5 @@
 package com.iniesta.ardillo.screen;
 
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javafx.concurrent.Service;
@@ -19,7 +14,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 
-import com.iniesta.ardillo.domain.ArdilloConnection;
 import com.iniesta.ardillo.util.CommonUtil;
 import com.iniesta.ardillo.util.ConnectionNode;
 import com.iniesta.ardillo.util.DataNode;
