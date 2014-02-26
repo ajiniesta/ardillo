@@ -7,6 +7,7 @@ import java.util.List;
 import com.iniesta.ardillo.dao.DAOConnection;
 import com.iniesta.ardillo.domain.ArdilloConnection;
 import com.iniesta.ardillo.util.DatabaseDataNode;
+import com.iniesta.ardillo.util.dddbb.MetaDataCalculations;
 
 import junit.framework.TestCase;
 
@@ -25,7 +26,7 @@ public class TestingDatabaseDetails extends TestCase{
 		
 		Connection connection = aconn.createConnection();
 		assertNotNull(connection);
-		List<DatabaseDataNode> tables = DatabaseDetail.calculateTables(aconn);
+		List<DatabaseDataNode> tables = MetaDataCalculations.calculateTables(aconn);
 		assertNotNull(tables);
 		assertTrue(tables.size()>0);
 		System.out.println(tables);

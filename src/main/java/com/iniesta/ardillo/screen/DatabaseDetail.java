@@ -26,6 +26,7 @@ import com.iniesta.ardillo.util.DataNode;
 import com.iniesta.ardillo.util.DatabaseDataNode;
 import com.iniesta.ardillo.util.DatabaseTreeCell;
 import com.iniesta.ardillo.util.ExternalBinding;
+import com.iniesta.ardillo.util.dddbb.MetaDataCalculations;
 
 public class DatabaseDetail extends Tab {
 
@@ -76,7 +77,7 @@ public class DatabaseDetail extends Tab {
 					@Override
 					protected TreeItem<DataNode> call() throws Exception {
 						TreeItem<DataNode> root = new TreeItem<DataNode>(new DataNode(connectionData.getNodeName()));
-						List<DatabaseDataNode> tables = calculateTables(connectionData.getArdillConnection());
+						List<DatabaseDataNode> tables = MetaDataCalculations.calculateTables(connectionData.getArdillConnection());
 						if(tables!=null){
 							for (DatabaseDataNode databaseDataNode : tables) {
 								root.getChildren().add(new TreeItem<DataNode>(databaseDataNode));
@@ -87,40 +88,6 @@ public class DatabaseDetail extends Tab {
 				};
 			}
 		};
-	}
-
-	protected static List<DatabaseDataNode> calculateTables(ArdilloConnection ardilloConnection) {
-		List<DatabaseDataNode> tables = null;
-		if (ardilloConnection != null) {
-			Connection connection = null;
-			try {
-				connection = ardilloConnection.createConnection();
-				DatabaseMetaData metaData = connection.getMetaData();
-				ResultSet resultSet = metaData.getTables(null, ardilloConnection.getSchema(), "%", null);
-				if(resultSet!=null){
-					while (resultSet.next()) {
-						String tableName = resultSet.getString(3);
-						if(tableName!=null){
-							if(tables==null){
-								tables = new ArrayList<DatabaseDataNode>();
-							}
-							tables.add(new DatabaseDataNode(tableName, ardilloConnection));
-						}
-					}
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					if (connection != null) {
-						connection.close();
-					}
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		return tables;
 	}
 
 	public void setOnOpenDatabase(Callback<DatabaseDataNode, Void> openDatabase) {
