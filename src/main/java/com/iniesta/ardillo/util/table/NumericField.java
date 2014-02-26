@@ -1,9 +1,16 @@
 package com.iniesta.ardillo.util.table;
 
+import com.iniesta.ardillo.util.CommonUtil;
+
 public class NumericField implements Field {
 
 	private Integer field;
-	
+
+	public NumericField(Integer field) {
+		super();
+		this.field = field;
+	}
+
 	public Integer getField() {
 		return field;
 	}
@@ -13,8 +20,7 @@ public class NumericField implements Field {
 	}
 
 	public String getValueToRepresent() {
-		// TODO Auto-generated method stub
-		return null;
+		return field!=null?field.toString():CommonUtil.NULL;
 	}
 
 }
