@@ -9,10 +9,13 @@ import java.util.List;
 
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 
@@ -28,6 +31,7 @@ public class DatabaseDetail extends Tab {
 
 	private AnchorPane parent;
 	private TreeView<DataNode> treeView;
+	private Callback<DatabaseDataNode, Void> callbackOpenDatabase;
 
 	public DatabaseDetail(ConnectionNode connectionData, ExternalBinding externalBinding) {
 		super(connectionData.getNodeName());
@@ -35,6 +39,7 @@ public class DatabaseDetail extends Tab {
 		parent = new AnchorPane();
 		CommonUtil.setAnchor0(parent);		
 		treeView = new TreeView<DataNode>();
+		treeView.setOnMouseClicked(mouseClickHandler());
 		CommonUtil.setAnchor0(treeView);
 		treeView.setCellFactory(new Callback<TreeView<DataNode>, TreeCell<DataNode>>() {
 			public TreeCell<DataNode> call(TreeView<DataNode> arg0) {
@@ -48,6 +53,19 @@ public class DatabaseDetail extends Tab {
 		service.start();
 		content.getChildren().add(parent);
 		setContent(content);
+	}
+
+	private EventHandler<? super MouseEvent> mouseClickHandler() {
+		return new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent event) {
+				if(treeView.getSelectionModel().getSelectedItem()!=null && event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount()==2){
+					DataNode dataNode = treeView.getSelectionModel().getSelectedItem().getValue();
+					if(dataNode instanceof DatabaseDataNode){
+						callbackOpenDatabase.call((DatabaseDataNode)treeView.getSelectionModel().getSelectedItem().getValue());
+					}
+				}
+			}
+		};
 	}
 
 	private Service<TreeItem<DataNode>> generateService(final ConnectionNode connectionData) {
@@ -86,7 +104,7 @@ public class DatabaseDetail extends Tab {
 							if(tables==null){
 								tables = new ArrayList<DatabaseDataNode>();
 							}
-							tables.add(new DatabaseDataNode(tableName));
+							tables.add(new DatabaseDataNode(tableName, ardilloConnection));
 						}
 					}
 				}
@@ -103,6 +121,10 @@ public class DatabaseDetail extends Tab {
 			}
 		}
 		return tables;
+	}
+
+	public void setOnOpenDatabase(Callback<DatabaseDataNode, Void> openDatabase) {
+		this.callbackOpenDatabase = openDatabase;		
 	}
 
 }

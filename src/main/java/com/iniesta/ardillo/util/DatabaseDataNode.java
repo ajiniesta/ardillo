@@ -1,9 +1,14 @@
 package com.iniesta.ardillo.util;
 
+import com.iniesta.ardillo.domain.ArdilloConnection;
+
 public class DatabaseDataNode extends DataNode {
 
-	public DatabaseDataNode(String tableName) {
+	ArdilloConnection ardilloConnection;
+	
+	public DatabaseDataNode(String tableName, ArdilloConnection ardilloConnection) {
 		super(tableName);
+		this.ardilloConnection = ardilloConnection;
 	}
 
 	/* (non-Javadoc)
@@ -14,5 +19,7 @@ public class DatabaseDataNode extends DataNode {
 		return "DatabaseDataNode [getNodeName()=" + getNodeName() + "]";
 	}
 
-	
+	public ArdilloConnection getArdilloConnection(){
+		return ardilloConnection;
+	}
 }

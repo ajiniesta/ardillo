@@ -9,6 +9,7 @@ import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -19,6 +20,8 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 
@@ -26,10 +29,12 @@ import com.iniesta.ardillo.dao.DAOConnection;
 import com.iniesta.ardillo.domain.ArdilloConnection;
 import com.iniesta.ardillo.screen.CreateDatabase;
 import com.iniesta.ardillo.screen.DatabaseDetail;
+import com.iniesta.ardillo.screen.TableTab;
 import com.iniesta.ardillo.util.CommonUtil;
 import com.iniesta.ardillo.util.ConnectionNode;
 import com.iniesta.ardillo.util.ConnectionTreeCell;
 import com.iniesta.ardillo.util.DataNode;
+import com.iniesta.ardillo.util.DatabaseDataNode;
 import com.iniesta.ardillo.util.ExternalBinding;
 
 public class Ardillo extends ExternalBinding {
@@ -73,7 +78,13 @@ public class Ardillo extends ExternalBinding {
 				return new ConnectionTreeCell();
 			}
 		});
-		
+		treeViewConnections.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent event) {
+				if(treeViewConnections.getSelectionModel().getSelectedItem()!=null && event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount()==2){
+					connectDatabase();
+				}
+			}
+		});
 	}
 
 	@FXML
@@ -154,11 +165,28 @@ public class Ardillo extends ExternalBinding {
 	
 	@FXML
 	void handleConnectionAction(ActionEvent action){
+		connectDatabase();
+	}
+
+	private void connectDatabase() {
 		TreeItem<DataNode> selectedItem = treeViewConnections.getSelectionModel().getSelectedItem();
 		if(selectedItem!=null && selectedItem.getValue() instanceof ConnectionNode){
-			Tab tab = new DatabaseDetail((ConnectionNode)selectedItem.getValue(), (ExternalBinding)this);		
+			DatabaseDetail tab = new DatabaseDetail((ConnectionNode)selectedItem.getValue(), (ExternalBinding)this);
+			tab.setOnOpenDatabase(new Callback<DatabaseDataNode, Void>() {
+				public Void call(DatabaseDataNode databaseDataNode) {
+					createTabDatabase(databaseDataNode);
+					return null;
+				}
+			});
 			tabPaneConnections.getTabs().add(tab);
+			tabPaneConnections.getSelectionModel().select(tab);
 		}
+	}
+
+	protected void createTabDatabase(DatabaseDataNode databaseDataNode) {
+		TableTab tab = new TableTab(databaseDataNode, (ExternalBinding)this);
+		mainTabPane.getTabs().add(tab);
+		mainTabPane.getSelectionModel().select(tab);
 	}
 
 	@Override
