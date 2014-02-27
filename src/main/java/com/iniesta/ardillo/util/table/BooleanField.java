@@ -1,17 +1,20 @@
 package com.iniesta.ardillo.util.table;
 
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ObservableValue;
+
 import com.iniesta.ardillo.util.CommonUtil;
 
-public class BooleanField implements Field {
+public class BooleanField extends Field<Boolean> {
 
-	private Boolean field;
+	private SimpleBooleanProperty field;
 	
 	/**
 	 * @param field
 	 */
 	public BooleanField(Boolean field) {
 		super();
-		this.field = field;
+		this.field = new SimpleBooleanProperty(field);
 	}
 
 	public String getValueToRepresent() {
@@ -22,14 +25,19 @@ public class BooleanField implements Field {
 	 * @return the field
 	 */
 	public Boolean getField() {
-		return field;
+		return field.getValue();
 	}
 
 	/**
 	 * @param field the field to set
 	 */
 	public void setField(Boolean field) {
-		this.field = field;
+		this.field.setValue(field);
+	}
+
+	@Override
+	public ObservableValue<Boolean> property() {
+		return field;
 	}
 
 }

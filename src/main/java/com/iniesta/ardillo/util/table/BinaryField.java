@@ -1,9 +1,16 @@
 package com.iniesta.ardillo.util.table;
 
-public class BinaryField implements Field{
+import javafx.beans.value.ObservableValue;
+
+public class BinaryField extends Field<byte[]>{
 
 	public String getValueToRepresent() {
 		return "[binary]";
+	}
+
+	@Override
+	public ObservableValue<byte[]> property() {
+		return null;
 	}
 
 }

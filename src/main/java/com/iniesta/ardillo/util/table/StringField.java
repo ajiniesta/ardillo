@@ -2,13 +2,10 @@ package com.iniesta.ardillo.util.table;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.util.Callback;
 
 import com.iniesta.ardillo.util.CommonUtil;
 
-public class StringField implements Field {
+public class StringField extends Field<String> {
 
 	private SimpleStringProperty field;
 	
@@ -29,21 +26,8 @@ public class StringField implements Field {
 		return field!=null?field.getValue():CommonUtil.NULL;
 	}
 	
-	public SimpleStringProperty propertyField(){
+	public ObservableValue<String> property(){
 		return field;
-	}
-
-	public static Callback<CellDataFeatures<CommonRow, String>, ObservableValue<String>> getCellValueFactory(final int index) {
-		return new Callback<TableColumn.CellDataFeatures<CommonRow,String>, ObservableValue<String>>() {			
-			public ObservableValue<String> call(CellDataFeatures<CommonRow, String> cdf) {
-				Field f = cdf.getValue().getFields().get(index);
-				if(f instanceof StringField){
-					return ((StringField)f).propertyField();
-				}else{
-					return null;
-				}
-			}
-		};
 	}
 
 }

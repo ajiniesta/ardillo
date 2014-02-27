@@ -21,6 +21,7 @@ import com.iniesta.ardillo.util.DatabaseDataNode;
 import com.iniesta.ardillo.util.ExternalBinding;
 import com.iniesta.ardillo.util.dddbb.MetaDataCalculations;
 import com.iniesta.ardillo.util.table.CommonRow;
+import com.iniesta.ardillo.util.table.Field;
 import com.iniesta.ardillo.util.table.StringField;
 
 public class ViewTable {
@@ -103,10 +104,12 @@ public class ViewTable {
 
 	private ObservableList<TableColumn<CommonRow, ?>> columnsForColumns() {
 		String[] colNames = new String[]{"Table Name","Column Name", "Data Type"};
+		StringField[] fields = new StringField[]{new StringField(""), new StringField(""), new StringField("")};
 		ObservableList<TableColumn<CommonRow, ?>> cols = FXCollections.observableArrayList();
 		for (int i = 0; i < colNames.length; i++) {
+			StringField field = fields[i];
 			TableColumn<CommonRow, String> col = new TableColumn<CommonRow, String>(colNames[i]);
-			col.setCellValueFactory(StringField.getCellValueFactory(i));
+			col.setCellValueFactory(field.getCellValueFactory(i));
 			col.setPrefWidth(150);
 			cols.add(col);
 		}		
