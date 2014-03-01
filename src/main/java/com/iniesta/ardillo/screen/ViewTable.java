@@ -21,7 +21,6 @@ import com.iniesta.ardillo.util.DatabaseDataNode;
 import com.iniesta.ardillo.util.ExternalBinding;
 import com.iniesta.ardillo.util.dddbb.MetaDataCalculations;
 import com.iniesta.ardillo.util.table.CommonRow;
-import com.iniesta.ardillo.util.table.Field;
 import com.iniesta.ardillo.util.table.StringField;
 
 public class ViewTable {

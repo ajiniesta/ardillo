@@ -15,7 +15,7 @@ public abstract class Field<T> {
 		return new Callback<TableColumn.CellDataFeatures<CommonRow,T>, ObservableValue<T>>() {			
 			@SuppressWarnings("unchecked")
 			public ObservableValue<T> call(CellDataFeatures<CommonRow, T> cdf) {
-				return cdf.getValue().getFields().get(index).property();				
+				return (ObservableValue<T>) cdf.getValue().getFields().get(index).property();				
 			}
 		};
 	}
