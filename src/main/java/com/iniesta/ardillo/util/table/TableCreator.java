@@ -1,5 +1,7 @@
 package com.iniesta.ardillo.util.table;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,40 +35,54 @@ public class TableCreator {
 		TableColumn<CommonRow, ?> col = null;
 		if(colInfo!=null){
 			col = createColumn(colInfo, index);
-			col.setPrefWidth(colInfo.getWidth());
+			if(colInfo.applyWidth()){
+				col.setPrefWidth(colInfo.getWidth());
+			}else{
+				col.setPrefWidth(colInfo.getDefaultWidth());
+			}
 		}
 		return col;
 	}
 
 	private TableColumn<CommonRow, ?> createColumn(TableColumnInfo colInfo, int index) {
 		Field<?> type = colInfo.getType().getType();
-		if(type instanceof StringField){
-			StringField field = (StringField)type;
-			TableColumn<CommonRow, String> tc = new TableColumn<CommonRow, String>(colInfo.getTitle());
-			tc.setCellValueFactory(field.getCellValueFactory(index));
-			return tc;
-		}else if(type instanceof NumberField){
-			NumberField field = (NumberField)type;
-			TableColumn<CommonRow, Number> tc = new TableColumn<CommonRow, Number>(colInfo.getTitle());
-			tc.setCellValueFactory(field.getCellValueFactory(index));
-			return tc;
-		}else if(type instanceof BooleanField){
-			BooleanField field = (BooleanField)type;
-			TableColumn<CommonRow, Boolean> tc = new TableColumn<CommonRow, Boolean>(colInfo.getTitle());
-			tc.setCellValueFactory(field.getCellValueFactory(index));
-			return tc;
-		}else if(type instanceof BinaryField){
-			BinaryField field = (BinaryField)type;
-			TableColumn<CommonRow, byte[]> tc = new TableColumn<CommonRow, byte[]>(colInfo.getTitle());
-			tc.setCellValueFactory(field.getCellValueFactory(index));
-			return tc;
-		}else{
+		switch (colInfo.getType()) {
+		case STRING:
+			StringField sField = (StringField)type;
+			TableColumn<CommonRow, String> stc = new TableColumn<CommonRow, String>(colInfo.getTitle());
+			stc.setCellValueFactory(sField.getCellValueFactory(index));
+			return stc;
+		case NUMBER:
+			NumberField nField = (NumberField)type;
+			TableColumn<CommonRow, Number> ntc = new TableColumn<CommonRow, Number>(colInfo.getTitle());
+			ntc.setCellValueFactory(nField.getCellValueFactory(index));
+			return ntc;
+		case BOOLEAN:
+			BooleanField bField = (BooleanField)type;
+			TableColumn<CommonRow, Boolean> btc = new TableColumn<CommonRow, Boolean>(colInfo.getTitle());
+			btc.setCellValueFactory(bField.getCellValueFactory(index));
+			return btc;
+		case BINARY:
+			BinaryField binField = (BinaryField)type;
+			TableColumn<CommonRow, byte[]> bintc = new TableColumn<CommonRow, byte[]>(colInfo.getTitle());
+			bintc.setCellValueFactory(binField.getCellValueFactory(index));
+			return bintc;
+		default:
 			return null;
 		}
 	}
 
 	public List<TableColumnInfo> getColumns() {
 		return columns;
+	}
+
+	public Field<?>[] getFields(ResultSet resultSet) throws SQLException {
+		Field<?>[] fields = new Field<?>[columns.size()];
+		for (int i = 0; i < columns.size(); i++) {
+			TableColumnInfo tci = columns.get(i);
+			fields[i] = tci.getField(resultSet);
+		}
+		return fields;
 	}
 	
 }

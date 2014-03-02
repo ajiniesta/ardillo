@@ -2,6 +2,9 @@ package com.iniesta.ardillo.screen;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -15,6 +18,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Callback;
 
 import com.iniesta.ardillo.util.CommonUtil;
 import com.iniesta.ardillo.util.DatabaseDataNode;
@@ -22,6 +26,9 @@ import com.iniesta.ardillo.util.ExternalBinding;
 import com.iniesta.ardillo.util.dddbb.MetaDataCalculations;
 import com.iniesta.ardillo.util.table.CommonRow;
 import com.iniesta.ardillo.util.table.StringField;
+import com.iniesta.ardillo.util.table.TableColumnInfo;
+import com.iniesta.ardillo.util.table.TableColumnInfo.ColumnType;
+import com.iniesta.ardillo.util.table.TableCreator;
 
 public class ViewTable {
 
@@ -80,7 +87,8 @@ public class ViewTable {
 
 	private void fillColumns() {
 		final TableView<CommonRow> tableView = tableColumns.getTableView();
-		tableView.getColumns().addAll(columnsForColumns());
+		final TableCreator tc = new TableCreator(generateColInfo());
+		tableView.getColumns().addAll(tc.generateColumns());
 		Service<ObservableList<CommonRow>> service = new Service<ObservableList<CommonRow>>() {			
 			@Override
 			protected Task<ObservableList<CommonRow>> createTask() {
@@ -88,7 +96,16 @@ public class ViewTable {
 					@Override
 					protected ObservableList<CommonRow> call() throws Exception {
 						ObservableList<CommonRow> items = FXCollections.observableArrayList();
-						List<CommonRow> rows = MetaDataCalculations.calculateColumnsDetails(dataNode.getArdilloConnection(), dataNode.getNodeName());
+						List<CommonRow> rows = MetaDataCalculations.calculateData(dataNode.getArdilloConnection(), new Callback<Connection, ResultSet>() {							
+							public ResultSet call(Connection connection) {
+								ResultSet resultSet = null;
+								try{
+								DatabaseMetaData metaData = connection.getMetaData();
+								resultSet = metaData.getColumns(null, dataNode.getArdilloConnection().getSchema(), dataNode.getNodeName(),"%");;
+								}catch(Exception ex){}
+								return resultSet;
+							}
+						}, tc);
 						items.addAll(rows);
 						return items;
 					}
@@ -99,6 +116,17 @@ public class ViewTable {
 		externalBinding.bind(service);
 		service.start();
 		
+	}
+
+	private TableColumnInfo[] generateColInfo() {
+		return new TableColumnInfo[]{//
+				new TableColumnInfo("Table Name", "TABLE_NAME", ColumnType.STRING),//
+				new TableColumnInfo("Column Name", "COLUMN_NAME", ColumnType.STRING),//
+				new TableColumnInfo("Data Type", "TYPE_NAME", ColumnType.STRING),//
+				new TableColumnInfo("Column Size", "COLUMN_SIZE", ColumnType.NUMBER),//
+				new TableColumnInfo("Decimal Digits", "DECIMAL_DIGITS", ColumnType.NUMBER),//
+				new TableColumnInfo("Nullable", "NULLABLE", ColumnType.NUMBER),//
+				new TableColumnInfo("Is Nullable", "IS_NULLABLE", ColumnType.STRING)};
 	}
 
 	private ObservableList<TableColumn<CommonRow, ?>> columnsForColumns() {
