@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
@@ -83,6 +85,33 @@ public class ViewTable {
 		this.dataNode = dataNode;
 		//Now the load can start
 		fillColumns();
+		fillData();
+	}
+
+	private void fillData() {
+		final TableView<CommonRow> tableView = tableData.getTableView();
+		final Service<TableCreator> serviceTableCreator = generateTableCreator();
+		externalBinding.bind(serviceTableCreator);
+		serviceTableCreator.runningProperty().addListener(new ChangeListener<Boolean>() {
+			public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean newValue) {
+				if(!newValue){
+					Service<ObservableList<CommonRow>> serviceData = generateData();
+					externalBinding.bind(serviceData);
+					tableView.getColumns().addAll(serviceTableCreator.getValue().generateColumns());
+					tableView.itemsProperty().bind(serviceData.valueProperty());
+					serviceData.start();
+				}
+			}
+		});		
+		serviceTableCreator.start();
+	}
+
+	protected Service<ObservableList<CommonRow>> generateData() {
+		return null;
+	}
+
+	private Service<TableCreator> generateTableCreator() {
+		return null;
 	}
 
 	private void fillColumns() {
