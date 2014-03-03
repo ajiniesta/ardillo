@@ -112,7 +112,8 @@ public class ViewTable {
 				return new Task<ObservableList<CommonRow>>() {					
 					@Override
 					protected ObservableList<CommonRow> call() throws Exception {
-						return FXCollections.observableArrayList(QueryExecutor.calculateData(dataNode.getArdilloConnection(), "select * from "+dataNode.getNodeName(), tc));						
+						String tableName = dataNode.getArdilloConnection().getSchema()+"."+dataNode.getNodeName();
+						return FXCollections.observableArrayList(QueryExecutor.calculateData(dataNode.getArdilloConnection(), "select * from "+tableName, tc));						
 					}
 				};
 			}
@@ -169,6 +170,7 @@ public class ViewTable {
 
 	private TableColumnInfo[] generateColInfo() {
 		return new TableColumnInfo[]{//
+				new TableColumnInfo("Schema Name", "TABLE_SCHEM", ColumnType.STRING),//
 				new TableColumnInfo("Table Name", "TABLE_NAME", ColumnType.STRING),//
 				new TableColumnInfo("Column Name", "COLUMN_NAME", ColumnType.STRING),//
 				new TableColumnInfo("Data Type", "TYPE_NAME", ColumnType.STRING),//
