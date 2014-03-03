@@ -17,7 +17,6 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
@@ -26,8 +25,8 @@ import com.iniesta.ardillo.util.CommonUtil;
 import com.iniesta.ardillo.util.DatabaseDataNode;
 import com.iniesta.ardillo.util.ExternalBinding;
 import com.iniesta.ardillo.util.dddbb.MetaDataCalculations;
+import com.iniesta.ardillo.util.dddbb.QueryExecutor;
 import com.iniesta.ardillo.util.table.CommonRow;
-import com.iniesta.ardillo.util.table.StringField;
 import com.iniesta.ardillo.util.table.TableColumnInfo;
 import com.iniesta.ardillo.util.table.TableColumnInfo.ColumnType;
 import com.iniesta.ardillo.util.table.TableCreator;
@@ -95,7 +94,7 @@ public class ViewTable {
 		serviceTableCreator.runningProperty().addListener(new ChangeListener<Boolean>() {
 			public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean newValue) {
 				if(!newValue){
-					Service<ObservableList<CommonRow>> serviceData = generateData();
+					Service<ObservableList<CommonRow>> serviceData = generateData(serviceTableCreator.getValue());
 					externalBinding.bind(serviceData);
 					tableView.getColumns().addAll(serviceTableCreator.getValue().generateColumns());
 					tableView.itemsProperty().bind(serviceData.valueProperty());
@@ -106,12 +105,33 @@ public class ViewTable {
 		serviceTableCreator.start();
 	}
 
-	protected Service<ObservableList<CommonRow>> generateData() {
-		return null;
+	protected Service<ObservableList<CommonRow>> generateData(final TableCreator tc) {
+		return new Service<ObservableList<CommonRow>>() {
+			@Override
+			protected Task<ObservableList<CommonRow>> createTask() {
+				return new Task<ObservableList<CommonRow>>() {					
+					@Override
+					protected ObservableList<CommonRow> call() throws Exception {
+						return FXCollections.observableArrayList(QueryExecutor.calculateData(dataNode.getArdilloConnection(), "select * from "+dataNode.getNodeName(), tc));						
+					}
+				};
+			}
+		};
 	}
 
 	private Service<TableCreator> generateTableCreator() {
-		return null;
+		return new Service<TableCreator>() {			
+			@Override
+			protected Task<TableCreator> createTask() {
+				return new Task<TableCreator>() {
+					@Override
+					protected TableCreator call() throws Exception {
+						TableCreator tc = new TableCreator(MetaDataCalculations.calculateColumnsDetails(dataNode.getArdilloConnection(), dataNode.getNodeName()));
+						return tc;
+					}
+				};
+			}
+		};
 	}
 
 	private void fillColumns() {
@@ -158,17 +178,4 @@ public class ViewTable {
 				new TableColumnInfo("Is Nullable", "IS_NULLABLE", ColumnType.STRING)};
 	}
 
-	private ObservableList<TableColumn<CommonRow, ?>> columnsForColumns() {
-		String[] colNames = new String[]{"Table Name","Column Name", "Data Type"};
-		StringField[] fields = new StringField[]{new StringField(""), new StringField(""), new StringField("")};
-		ObservableList<TableColumn<CommonRow, ?>> cols = FXCollections.observableArrayList();
-		for (int i = 0; i < colNames.length; i++) {
-			StringField field = fields[i];
-			TableColumn<CommonRow, String> col = new TableColumn<CommonRow, String>(colNames[i]);
-			col.setCellValueFactory(field.getCellValueFactory(i));
-			col.setPrefWidth(150);
-			cols.add(col);
-		}		
-		return cols;
-	}
 }

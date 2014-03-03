@@ -12,7 +12,8 @@ import javafx.util.Callback;
 import com.iniesta.ardillo.domain.ArdilloConnection;
 import com.iniesta.ardillo.util.DatabaseDataNode;
 import com.iniesta.ardillo.util.table.CommonRow;
-import com.iniesta.ardillo.util.table.StringField;
+import com.iniesta.ardillo.util.table.TableColumnInfo;
+import com.iniesta.ardillo.util.table.TableColumnInfo.ColumnType;
 import com.iniesta.ardillo.util.table.TableCreator;
 
 public class MetaDataCalculations {
@@ -51,8 +52,8 @@ public class MetaDataCalculations {
 		return tables;
 	}
 	
-	public static List<CommonRow> calculateColumnsDetails(ArdilloConnection ardilloConnection, String tableName) {
-		List<CommonRow> rows = null;
+	public static List<TableColumnInfo> calculateColumnsDetails(ArdilloConnection ardilloConnection, String tableName) {
+		List<TableColumnInfo> cols = null;
 		if (ardilloConnection != null) {
 			Connection connection = null;
 			try {
@@ -60,16 +61,14 @@ public class MetaDataCalculations {
 				DatabaseMetaData metaData = connection.getMetaData();
 				ResultSet resultSet = metaData.getColumns(null, ardilloConnection.getSchema(), tableName,"%");
 				if(resultSet!=null){
-					while (resultSet.next()) {
-						CommonRow row = new CommonRow();
-						String t = resultSet.getString("TABLE_NAME");
+					while (resultSet.next()) {						
 						String c = resultSet.getString("COLUMN_NAME");
 						String tn = resultSet.getString("TYPE_NAME");
-						if(rows==null){
-							rows = new ArrayList<CommonRow>();
+						TableColumnInfo col = new TableColumnInfo(c, ColumnType.create(tn));
+						if(cols==null){
+							cols = new ArrayList<TableColumnInfo>();
 						}						
-						row.add(new StringField(t), new StringField(c), new StringField(tn));
-						rows.add(row);
+						cols.add(col);
 						
 					}
 				}
@@ -85,7 +84,7 @@ public class MetaDataCalculations {
 				}
 			}
 		}
-		return rows;
+		return cols;
 	}
 	
 	public static List<CommonRow> calculateData(ArdilloConnection ardilloConnection, Callback<Connection, ResultSet> callback, TableCreator tc) {

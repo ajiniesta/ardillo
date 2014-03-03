@@ -22,6 +22,19 @@ public class TableColumnInfo {
 			return type;
 		}
 
+		public static ColumnType create(String type) {
+			ColumnType ct = STRING;
+			if(type!=null){
+				type = type.toLowerCase().trim();
+				if(type.contains("char")){
+					ct = STRING;
+				}else if(type.contains("int")){
+					ct = NUMBER;
+				}
+			}
+			return ct;
+		}
+
 	}
 
 	private String title;
@@ -34,9 +47,7 @@ public class TableColumnInfo {
 	 * @param type
 	 */
 	public TableColumnInfo(String title, ColumnType type) {
-		super();
-		this.title = title;
-		this.type = type;
+		this(title, title, type, -1);
 	}
 
 	public TableColumnInfo(String title, String columnNameSql, ColumnType type) {
@@ -44,6 +55,7 @@ public class TableColumnInfo {
 	}
 
 	public TableColumnInfo(String title, String columnNameSql, ColumnType type, double width) {
+		super();
 		this.title = title;
 		this.columnNameSql = columnNameSql;
 		this.type = type;
@@ -113,8 +125,16 @@ public class TableColumnInfo {
 		return "TableColumnInfo [title=" + title + ", columnNameSql=" + columnNameSql + ", type=" + type + "]";
 	}
 
-	public double getWidth() {
+	public double getOriginalWidth() {
 		return width;
+	}
+	
+	public double getWidth() {
+		if(applyWidth()){
+			return width;
+		}else{
+			return getDefaultWidth();
+		}
 	}
 
 	public void setWidth(double width) {

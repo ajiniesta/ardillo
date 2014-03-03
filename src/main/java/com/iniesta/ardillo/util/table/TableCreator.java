@@ -2,6 +2,7 @@ package com.iniesta.ardillo.util.table;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,6 +17,13 @@ public class TableCreator {
 	public TableCreator(TableColumnInfo ... columnInfos){
 		if(columnInfos!=null){
 			columns = Arrays.asList(columnInfos);
+		}
+	}
+	
+	public TableCreator(List<TableColumnInfo> columnInfos){
+		if(columnInfos!=null){
+			columns = new ArrayList<TableColumnInfo>();
+			columns.addAll(columnInfos);
 		}
 	}
 	
@@ -35,11 +43,7 @@ public class TableCreator {
 		TableColumn<CommonRow, ?> col = null;
 		if(colInfo!=null){
 			col = createColumn(colInfo, index);
-			if(colInfo.applyWidth()){
-				col.setPrefWidth(colInfo.getWidth());
-			}else{
-				col.setPrefWidth(colInfo.getDefaultWidth());
-			}
+			col.setPrefWidth(colInfo.getWidth());
 		}
 		return col;
 	}
