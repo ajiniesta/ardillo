@@ -9,6 +9,9 @@
 .idea
 *.iml
 
+*.log
+*.log.*
+
 .classpath
 .project
 .settings
