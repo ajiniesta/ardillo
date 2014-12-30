@@ -20,4 +20,4 @@ ARDILLO_HOME=$DIR/..
 
 cd $DIR
 
-java -cp $JFXRT:../drivers/*:../lib/* com.iniesta.ardillo.RunArdillo
+java -cp ../conf/*:$JFXRT:../drivers/*:../lib/* com.iniesta.ardillo.RunArdillo

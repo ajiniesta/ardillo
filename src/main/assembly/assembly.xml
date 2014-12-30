@@ -39,6 +39,10 @@
       <outputDirectory>bin</outputDirectory>
       <fileMode>755</fileMode>
     </fileSet>
+    <fileSet>
+      <directory>src/main/conf</directory>
+      <outputDirectory>conf</outputDirectory>
+    </fileSet>
     <!-- Adds the jar file of our example application to the root directory 
       of the created zip package. -->
     <fileSet>
