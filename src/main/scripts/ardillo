@@ -1,5 +1,22 @@
 #!/bin/bash
 
+#Edit this line in your system
 JFXRT=/usr/lib/jvm/jdk1.7.0_13/jre/lib/jfxrt.jar
 
-java -cp $JFXRT:../lib/* com.iniesta.ardillo.RunArdillo
+
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+  TARGET="$(readlink "$SOURCE")"
+  if [[ $SOURCE == /* ]]; then
+    SOURCE="$TARGET"
+  else
+    DIR="$( dirname "$SOURCE" )"
+    SOURCE="$DIR/$TARGET" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+  fi
+done
+RDIR="$( dirname "$SOURCE" )"
+DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+
+cd $DIR
+
+java -cp $JFXRT:../drivers/*:../lib/* com.iniesta.ardillo.RunArdillo
