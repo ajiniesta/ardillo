@@ -65,7 +65,24 @@ public class CreateDatabase {
 
     @FXML
     void handleSaveAction(ActionEvent event) {
-    	final Service<ArdilloConnection> serviceSave = new Service<ArdilloConnection>() {
+    	final Service<ArdilloConnection> serviceSave = service();
+		externalBinding.bindAll(serviceSave);
+		serviceSave.runningProperty().addListener(new ChangeListener<Boolean>() {
+			public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean newValue) {
+				if(!newValue){
+					ArdilloConnection value = serviceSave.getValue();
+					if(value!=null){
+						ConnectionNode connNode = new ConnectionNode(value);
+				    	callBackSuccess.call(connNode);
+					}
+				}
+			}
+		});		
+    	serviceSave.start();
+    }
+
+	private Service<ArdilloConnection> service() {
+		return new Service<ArdilloConnection>() {
 			@Override
 			protected Task<ArdilloConnection> createTask() {
 				return new Task<ArdilloConnection>() {					
@@ -93,20 +110,7 @@ public class CreateDatabase {
 				};
 			}
 		};
-		externalBinding.bindAll(serviceSave);
-		serviceSave.runningProperty().addListener(new ChangeListener<Boolean>() {
-			public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean newValue) {
-				if(!newValue){
-					ArdilloConnection value = serviceSave.getValue();
-					if(value!=null){
-						ConnectionNode connNode = new ConnectionNode(value);
-				    	callBackSuccess.call(connNode);
-					}
-				}
-			}
-		});		
-    	serviceSave.start();
-    }
+	}
 
 	@FXML
     void handleTestAction(ActionEvent event) {

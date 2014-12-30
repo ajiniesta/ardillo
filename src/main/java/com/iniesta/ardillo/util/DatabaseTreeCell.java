@@ -18,5 +18,4 @@ public class DatabaseTreeCell extends TreeCell<DataNode> {
 			}
 		}
 	}
-	
 }
