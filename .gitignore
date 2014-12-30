@@ -6,6 +6,8 @@
 *.ear
 *.bak
 *.sublime-*
+.idea
+*.iml
 
 .classpath
 .project
