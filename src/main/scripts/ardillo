@@ -1,0 +1,5 @@
+#!/bin/bash
+
+JFXRT=/usr/lib/jvm/jdk1.7.0_13/jre/lib/jfxrt.jar
+
+java -cp $JFXRT:../lib/* com.iniesta.ardillo.RunArdillo
