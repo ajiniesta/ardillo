@@ -42,11 +42,16 @@
         <Label text="Driver" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.margin="$x1" GridPane.rowIndex="8" />
         <HBox alignment="CENTER" prefHeight="-1.0" prefWidth="-1.0" spacing="10.0" GridPane.columnIndex="0" GridPane.columnSpan="2147483647" GridPane.rowIndex="9">
           <children>
-            <Button mnemonicParsing="false" onAction="#handleTestAction" prefWidth="70.0" text="Test" />
-            <Button mnemonicParsing="false" onAction="#handleSaveAction" prefWidth="70.0" text="Save" />
-            <Button mnemonicParsing="false" onAction="#handleCancelAction" prefWidth="70.0" text="Cancel" />
+            <Button fx:id="buttonTest" mnemonicParsing="false" onAction="#handleTestAction" prefWidth="70.0" text="Test" />
+            <Button fx:id="buttonSave" mnemonicParsing="false" onAction="#handleSaveAction" prefWidth="70.0" text="Save" />
+            <Button fx:id="buttonCancel" mnemonicParsing="false" onAction="#handleCancelAction" prefWidth="70.0" text="Cancel" />
           </children>
         </HBox>
+        <Button id="buttonOther" fx:id="buttonMore" mnemonicParsing="false" onAction="#handleMoreAction" prefWidth="70.0" text="More" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+          <GridPane.margin>
+            <Insets right="10.0" fx:id="x1" />
+          </GridPane.margin>
+        </Button>
       </children>
       <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
