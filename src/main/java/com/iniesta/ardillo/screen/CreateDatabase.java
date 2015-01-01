@@ -1,27 +1,25 @@
 package com.iniesta.ardillo.screen;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Callback;
 
-import com.iniesta.ardillo.dao.DAOConnection;
 import com.iniesta.ardillo.domain.ArdilloConnection;
 import com.iniesta.ardillo.domain.DatabaseType;
 import com.iniesta.ardillo.services.DatabaseServices;
+import com.iniesta.ardillo.services.LoadDriversService;
 import com.iniesta.ardillo.util.ConnectionNode;
 import com.iniesta.ardillo.util.ExternalBinding;
 import com.iniesta.ardillo.util.MapScreen;
@@ -45,7 +43,7 @@ public class CreateDatabase {
     private TextField textFieldConnectionName;
 
     @FXML
-    private TextField textFieldDriver;
+    private TextField textFieldDbms;
 
     @FXML
     private TextField textFieldHost;
@@ -67,9 +65,6 @@ public class CreateDatabase {
     
     @FXML
     private Button buttonCancel;
-    
-    @FXML
-    private Button buttonMore;
 
 	private Callback<Void, Void> callbackClose;
 
@@ -98,26 +93,7 @@ public class CreateDatabase {
 			}
 		});		
     	serviceSave.start();
-    }
-    
-    @FXML
-    void handleMoreAction(ActionEvent event){
-    	FileChooser chooser = new FileChooser();
-    	chooser.setTitle("Look for a driver class");
-    	chooser.getExtensionFilters().add(new ExtensionFilter("Driver Jar", ".jar"));
-    	File file = chooser.showOpenDialog(null);
-    	final Service<Boolean> service = DatabaseServices.serviceMore(file);
-    	externalBinding.bindAll(service);
-    	service.runningProperty().addListener(new ChangeListener<Boolean>() {
-			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				if(!newValue){
-					
-				}
-			}
-		});
-    }
-
-	
+    }	
 
 	@FXML
     void handleTestAction(ActionEvent event) {
@@ -125,9 +101,16 @@ public class CreateDatabase {
 
     @FXML
     void initialize() {
-
-
+    	comboBoxDatabaseType.setButtonCell(comboCellFactoryCallback().call(null));
+    	comboBoxDatabaseType.setCellFactory(comboCellFactoryCallback());
     }
+    
+    private void postInitialization() {
+		LoadDriversService service = new LoadDriversService();
+    	comboBoxDatabaseType.itemsProperty().bind(service.valueProperty());
+    	externalBinding.bindAll(service);
+    	service.start();
+	}
 
 	public void setOnCloseAction(Callback<Void, Void> callback) {
 		this.callbackClose = callback;		
@@ -138,7 +121,27 @@ public class CreateDatabase {
 	}
 
 	public void setExternalBinding(ExternalBinding externalBinding) {
-		this.externalBinding = externalBinding;		
+		this.externalBinding = externalBinding;
+		postInitialization();
 	}
 
+	private Callback<ListView<DatabaseType>, ListCell<DatabaseType>> comboCellFactoryCallback() {
+		return new Callback<ListView<DatabaseType>, ListCell<DatabaseType>>() {
+			public ListCell<DatabaseType> call(ListView<DatabaseType> arg0) {
+				return comboCellFactory();
+			}
+		};
+	}
+	
+	private ListCell<DatabaseType> comboCellFactory() {
+		return new ListCell<DatabaseType>(){
+			@Override
+			protected void updateItem(DatabaseType dt, boolean empty) {
+				super.updateItem(dt, empty);
+				if(!empty){
+					setText(dt.getDatabaseName());
+				}
+			}
+		};
+	}
 }

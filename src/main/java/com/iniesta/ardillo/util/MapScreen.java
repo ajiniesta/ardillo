@@ -5,10 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextInputControl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.iniesta.ardillo.domain.DatabaseType;
 
 public class MapScreen {
 
@@ -59,5 +62,11 @@ public class MapScreen {
 	
 	public String getTextFieldParam(String key){
 		return getParam(key, TextInputControl.class).getText();
+	}
+	
+	public DatabaseType getDatabaseTypeParam(String key){
+		@SuppressWarnings("unchecked")
+		ComboBox<DatabaseType> param = getParam(key, ComboBox.class);
+		return param.getSelectionModel().getSelectedItem();
 	}
 }

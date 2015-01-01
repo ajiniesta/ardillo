@@ -6,13 +6,13 @@ public class DatabaseType {
 
 	private String driverClass;
 
-	private String fileName;
+	private String dbms;
 
-	public DatabaseType(String databaseName, String driverClass, String fileName) {
+	public DatabaseType(String databaseName, String driverClass, String dbms) {
 		super();
 		this.databaseName = databaseName;
 		this.driverClass = driverClass;
-		this.fileName = fileName;
+		this.dbms = dbms;
 	}
 
 	public String getDatabaseName() {
@@ -31,12 +31,12 @@ public class DatabaseType {
 		this.driverClass = driverClass;
 	}
 
-	public String getFileName() {
-		return fileName;
+	public String getDbms() {
+		return dbms;
 	}
 
 	public void setFileName(String fileName) {
-		this.fileName = fileName;
+		this.dbms = fileName;
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class DatabaseType {
 		int result = 1;
 		result = prime * result + ((databaseName == null) ? 0 : databaseName.hashCode());
 		result = prime * result + ((driverClass == null) ? 0 : driverClass.hashCode());
-		result = prime * result + ((fileName == null) ? 0 : fileName.hashCode());
+		result = prime * result + ((dbms == null) ? 0 : dbms.hashCode());
 		return result;
 	}
 
@@ -68,17 +68,17 @@ public class DatabaseType {
 				return false;
 		} else if (!driverClass.equals(other.driverClass))
 			return false;
-		if (fileName == null) {
-			if (other.fileName != null)
+		if (dbms == null) {
+			if (other.dbms != null)
 				return false;
-		} else if (!fileName.equals(other.fileName))
+		} else if (!dbms.equals(other.dbms))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "DatabaseType [databaseName=" + databaseName + ", driverClass=" + driverClass + ", fileName=" + fileName + "]";
+		return "DatabaseType [databaseName=" + databaseName + ", driverClass=" + driverClass + ", fileName=" + dbms + "]";
 	}
 
 }
