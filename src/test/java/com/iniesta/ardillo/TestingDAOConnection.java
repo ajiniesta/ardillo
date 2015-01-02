@@ -1,14 +1,22 @@
 package com.iniesta.ardillo;
 
-import junit.framework.TestCase;
 import com.iniesta.ardillo.dao.DAOConnection;
 import com.iniesta.ardillo.domain.ArdilloConnection;
+import com.iniesta.ardillo.util.HibernateUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class TestingDAOConnection extends TestCase{
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+public class TestingDAOConnection{
+	
+	
+	@Test
 	public void testSave(){
 		DAOConnection dao = new DAOConnection();
 		ArdilloConnection conn = new ArdilloConnection();
@@ -21,6 +29,7 @@ public class TestingDAOConnection extends TestCase{
 		assertNotNull(id);
 	}
 	
+	@Test
 	public void testAdd(){
 		DAOConnection dao = new DAOConnection();
 		ArdilloConnection aconn = new ArdilloConnection();
@@ -38,6 +47,7 @@ public class TestingDAOConnection extends TestCase{
 		assertNotNull(id);
 	}
 
+	@Test
 	public void testListing(){
 		DAOConnection dao = new DAOConnection();
 		List<ArdilloConnection> list = dao.listConnections();

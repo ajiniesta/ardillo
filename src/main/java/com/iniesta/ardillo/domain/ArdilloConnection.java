@@ -36,7 +36,7 @@ public class ArdilloConnection implements Serializable {
 		this.id = id;
 	}
 
-	@Column
+	@Column(unique=true)
 	public String getName() {
 		return name;
 	}
@@ -135,13 +135,11 @@ public class ArdilloConnection implements Serializable {
 		Class.forName(driver);
 		String portStr = port!=null?":" + this.port:"";
 		String url = null;
-		if(dbms.contains("file")){
-			url = "jdbc:" + this.dbms + ":" + this.host ;
-			
-		}else{
+		if(dbms.contains(":file") || dbms.contains(":mem")){
+			url = "jdbc:" + this.dbms + ":" + this.host ;			
+		}else {
 			url = "jdbc:" + this.dbms + "://" + this.host + portStr + "/";
 		}
-		System.out.println(url);
 		conn = DriverManager.getConnection(url, connectionProps);
 
 		return conn;

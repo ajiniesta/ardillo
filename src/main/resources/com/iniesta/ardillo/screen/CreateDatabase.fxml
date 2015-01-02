@@ -27,7 +27,7 @@
         <TextField fx:id="textFieldUsername" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
         <PasswordField fx:id="passwordField" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
         <TextField id="textFieldPrefixDB" fx:id="textFieldSchema" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-        <TextField fx:id="textFieldDriver" prefWidth="200.0" visible="true" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+        <TextField fx:id="textFieldDriver" prefWidth="200.0" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="8" />
         <Label text="Connection Name" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
           <GridPane.margin>
             <Insets right="10.0" fx:id="x1" />
@@ -39,7 +39,7 @@
         <Label text="Username" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.margin="$x1" GridPane.rowIndex="5" />
         <Label text="Password" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.margin="$x1" GridPane.rowIndex="6" />
         <Label text="Schema" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.margin="$x1" GridPane.rowIndex="7" />
-        <Label text="DBMS" visible="true" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.margin="$x1" GridPane.rowIndex="8" />
+        <Label text="DBMS" visible="false" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.margin="$x1" GridPane.rowIndex="8" />
         <HBox alignment="CENTER" prefHeight="-1.0" prefWidth="-1.0" spacing="10.0" GridPane.columnIndex="0" GridPane.columnSpan="2147483647" GridPane.rowIndex="9">
           <children>
             <Button fx:id="buttonTest" mnemonicParsing="false" onAction="#handleTestAction" prefWidth="70.0" text="Test" />

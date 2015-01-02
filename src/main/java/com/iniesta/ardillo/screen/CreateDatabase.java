@@ -101,15 +101,15 @@ public class CreateDatabase {
 
     @FXML
     void initialize() {
-    	comboBoxDatabaseType.setButtonCell(comboCellFactoryCallback().call(null));
+//    	comboBoxDatabaseType.setButtonCell(comboCellFactoryCallback().call(null));
     	comboBoxDatabaseType.setCellFactory(comboCellFactoryCallback());
     }
     
-    private void postInitialization() {
+    private void postInitialization() {    	
 		LoadDriversService service = new LoadDriversService();
     	comboBoxDatabaseType.itemsProperty().bind(service.valueProperty());
     	externalBinding.bindAll(service);
-    	service.start();
+    	service.start();    	
 	}
 
 	public void setOnCloseAction(Callback<Void, Void> callback) {
