@@ -20,7 +20,7 @@ public class TestingDAOConnection{
 	public void testSave(){
 		DAOConnection dao = new DAOConnection();
 		ArdilloConnection conn = new ArdilloConnection();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_hhmm");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_hhmmss.S");
 		String date = sdf.format(new Date());
 		conn.setName("del"+date);
 		
@@ -39,7 +39,7 @@ public class TestingDAOConnection{
 		aconn.setDriver("org.h2.Driver");
 		aconn.setUser("SA");
 		aconn.setPassword("");
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_hhmm");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_hhmmss.S");
 		String date = sdf.format(new Date());
 		aconn.setName("del"+date);
 		

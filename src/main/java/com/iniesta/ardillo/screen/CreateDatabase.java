@@ -5,7 +5,6 @@ import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Service;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -20,6 +19,7 @@ import com.iniesta.ardillo.domain.ArdilloConnection;
 import com.iniesta.ardillo.domain.DatabaseType;
 import com.iniesta.ardillo.services.DatabaseServices;
 import com.iniesta.ardillo.services.LoadDriversService;
+import com.iniesta.ardillo.services.StatusService;
 import com.iniesta.ardillo.util.ConnectionNode;
 import com.iniesta.ardillo.util.ExternalBinding;
 import com.iniesta.ardillo.util.MapScreen;
@@ -79,11 +79,11 @@ public class CreateDatabase {
 
     @FXML
     void handleSaveAction(ActionEvent event) {
-    	final Service<ArdilloConnection> serviceSave = DatabaseServices.serviceSave(new MapScreen(this));
+    	final StatusService<ArdilloConnection> serviceSave = DatabaseServices.serviceSave(new MapScreen(this));
 		externalBinding.bindAll(serviceSave);
 		serviceSave.runningProperty().addListener(new ChangeListener<Boolean>() {
 			public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean newValue) {
-				if(!newValue){
+				if(!newValue && !serviceSave.isErrorMode()){
 					ArdilloConnection value = serviceSave.getValue();
 					if(value!=null){
 						ConnectionNode connNode = new ConnectionNode(value);
@@ -102,7 +102,7 @@ public class CreateDatabase {
     @FXML
     void initialize() {
 //    	comboBoxDatabaseType.setButtonCell(comboCellFactoryCallback().call(null));
-    	comboBoxDatabaseType.setCellFactory(comboCellFactoryCallback());
+//    	comboBoxDatabaseType.setCellFactory(comboCellFactoryCallback());
     }
     
     private void postInitialization() {    	

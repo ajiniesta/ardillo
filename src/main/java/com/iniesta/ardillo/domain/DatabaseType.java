@@ -78,7 +78,7 @@ public class DatabaseType {
 
 	@Override
 	public String toString() {
-		return "DatabaseType [databaseName=" + databaseName + ", driverClass=" + driverClass + ", fileName=" + dbms + "]";
+		return databaseName;
 	}
 
 }

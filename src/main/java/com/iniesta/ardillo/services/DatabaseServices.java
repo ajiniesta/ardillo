@@ -1,6 +1,5 @@
 package com.iniesta.ardillo.services;
 
-import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
 import com.iniesta.ardillo.dao.DAOConnection;
@@ -10,8 +9,8 @@ import com.iniesta.ardillo.util.MapScreen;
 
 public class DatabaseServices {
 
-	public static Service<ArdilloConnection> serviceSave(final MapScreen mapScreen) {
-		return new Service<ArdilloConnection>() {
+	public static StatusService<ArdilloConnection> serviceSave(final MapScreen mapScreen) {
+		return new StatusService<ArdilloConnection>() {
 			@Override
 			protected Task<ArdilloConnection> createTask() {
 				return new Task<ArdilloConnection>() {
@@ -31,11 +30,13 @@ public class DatabaseServices {
 						Integer id = new DAOConnection().saveConnection(value);
 						if (id == null) {
 							updateMessage("Problem saving");
+							setErrorMode(true);
 						}
 						
 						if(!isValid(value)){
 							value = new ArdilloConnection();
 							updateMessage("Invalid connection");
+							setErrorMode(true);
 						}
 
 						return value;
