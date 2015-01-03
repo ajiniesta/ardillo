@@ -16,7 +16,7 @@ done
 RDIR="$( dirname "$SOURCE" )"
 DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
-ARDILLO_HOME=$DIR/..
+export ARDILLO_HOME=$DIR/..
 
 cd $DIR
 
