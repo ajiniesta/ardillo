@@ -20,4 +20,6 @@ export ARDILLO_HOME=$DIR/..
 
 cd $DIR
 
-java -cp ../conf/*:$JFXRT:../drivers/*:../lib/* com.iniesta.ardillo.RunArdillo
+#JAVA_DEBUG_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044"
+
+java $JAVA_DEBUG_OPTS -cp ../conf/*:$JFXRT:../drivers/*:../lib/* com.iniesta.ardillo.RunArdillo
