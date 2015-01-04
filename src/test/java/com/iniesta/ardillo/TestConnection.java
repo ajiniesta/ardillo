@@ -1,18 +1,20 @@
 package com.iniesta.ardillo;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
 import com.iniesta.ardillo.domain.ArdilloConnection;
 
-public class TestConnection extends TestCase {
+public class TestConnection {
 
+	@Test
 	public void test1() throws ClassNotFoundException, SQLException{
 		ArdilloConnection aconn = new ArdilloConnection();
-		aconn.setDbms("h2:file");
-		aconn.setHost("data/ardillo");
+		aconn.setDbms("h2:mem");
 		aconn.setPort(null);
 		aconn.setDriver("org.h2.Driver");
 		aconn.setUser("SA");

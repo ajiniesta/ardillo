@@ -12,12 +12,11 @@ public class HibernateUtil {
 
 	static {
 		try {
-			sessionFactory = new AnnotationConfiguration()
-								.configure()
-								.addPackage("com.iniesta.ardillo.domain") //the fully qualified package name
-								.addAnnotatedClass(ArdilloConnection.class)
-								.buildSessionFactory();
-
+			sessionFactory = new AnnotationConfiguration() //
+				.configure() //
+				.addPackage("com.iniesta.ardillo.domain") //the fully qualified package name
+				.addAnnotatedClass(ArdilloConnection.class) //
+				.buildSessionFactory(); //	
 		} catch (Throwable ex) {
 			System.err.println("Initial SessionFactory creation failed." + ex);
 			throw new ExceptionInInitializerError(ex);
@@ -27,4 +26,14 @@ public class HibernateUtil {
 	public static SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
+	
+	public static SessionFactory testSessionFactory() {
+		return new AnnotationConfiguration() //
+			.configure() //
+			.setProperty("hibernate.connection.url", "jdbc:h2:mem") //
+			.addPackage("com.iniesta.ardillo.domain") //
+			.addAnnotatedClass(ArdilloConnection.class) //
+			.buildSessionFactory(); //
+	}
+
 }
