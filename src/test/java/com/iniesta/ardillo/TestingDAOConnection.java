@@ -1,17 +1,15 @@
 package com.iniesta.ardillo;
 
-import com.iniesta.ardillo.dao.DAOConnection;
-import com.iniesta.ardillo.domain.ArdilloConnection;
-import com.iniesta.ardillo.util.HibernateUtil;
+import static org.junit.Assert.assertNotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import com.iniesta.ardillo.dao.DAOConnection;
+import com.iniesta.ardillo.domain.ArdilloConnection;
 
 public class TestingDAOConnection{
 	

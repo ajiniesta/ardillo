@@ -1,9 +1,11 @@
 package com.iniesta.ardillo.dao;
 
 import java.util.List;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 import com.iniesta.ardillo.domain.ArdilloConnection;
 import com.iniesta.ardillo.util.HibernateUtil;
 
@@ -83,5 +85,24 @@ public class DAOConnection{
 		} finally {
 			session.close();
 		}
+	}
+
+	public void deleteConnection(String name) {
+		
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			String hql = "delete from ArdilloConnection where name= :name";
+			session.createQuery(hql).setString("name", name).executeUpdate();
+
+			transaction.commit();
+		} catch (HibernateException e) {
+			transaction.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		
 	}
 }
