@@ -8,7 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import org.hibernate.SessionFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
