@@ -4,18 +4,17 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
+import com.iniesta.ardillo.domain.DatabaseType;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextInputControl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.iniesta.ardillo.domain.DatabaseType;
-
 public class MapScreen {
 
-	private static final Logger logger = LoggerFactory.getLogger(MapScreen.class);
+	private static final Logger logger = Logger.getLogger(MapScreen.class);
 	
 	private Object obj;
 	private Map<String, Object> mapParams;

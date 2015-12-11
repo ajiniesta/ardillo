@@ -6,8 +6,7 @@ import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 import com.iniesta.ardillo.domain.DatabaseType;
 import com.iniesta.ardillo.util.Environment;
@@ -19,7 +18,7 @@ import javafx.concurrent.Task;
 
 public class LoadDriversService extends Service<ObservableList<DatabaseType>> {
 
-	private static final Logger logger = LoggerFactory.getLogger(LoadDriversService.class);
+	private static final Logger logger = Logger.getLogger(LoadDriversService.class);
 	
 	private DatabaseType defaultH2(){
 		return new DatabaseType("H2 File", "org.h2.Driver", "h2:file");
