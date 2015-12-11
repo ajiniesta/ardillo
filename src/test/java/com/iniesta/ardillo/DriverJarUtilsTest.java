@@ -3,16 +3,12 @@ package com.iniesta.ardillo;
 import java.sql.Driver;
 import java.util.Set;
 
-import javafx.concurrent.Service;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.reflections.Reflections;
 
 import com.iniesta.ardillo.util.DriverJarUtils;
-
-import static org.junit.Assert.*;
 
 public class DriverJarUtilsTest {
 
@@ -38,25 +34,6 @@ public class DriverJarUtilsTest {
 		Set<Class<? extends Driver>> drivers = dju.extractAllJDBCDrivers();
 		for (Class<? extends Driver> clazz : drivers) {
 			System.out.println(clazz.getCanonicalName());
-		}
-	}
-	
-	@Test
-	public void testInnerReflections() throws Exception{
-		Reflections reflections = new Reflections("com.iniesta.ardillo");
-		Set<Class<? extends Service>> types = reflections.getSubTypesOf(Service.class);
-		for (Class<? extends Service> ser : types) {
-			System.out.println(ser.getName());
-		}
-	}
-	
-	@Test
-	public void testInnerReflections05() throws Exception{
-		Reflections reflections = new Reflections("com");
-		Set<Class<? extends Service>> types = reflections.getSubTypesOf(Service.class);
-		System.out.println("Number of Types... " + types.size());
-		for (Class<? extends Service> ser : types) {
-			System.out.println(ser.getName());
 		}
 	}
 	
